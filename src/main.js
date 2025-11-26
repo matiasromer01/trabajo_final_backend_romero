@@ -13,11 +13,21 @@ connectToMongoDB()
 
 const app = express()
 
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://trabajo-final-frontend-romero.vercel.app'
+]
+
+const vercelPreviewRegex = /^https:\/\/trabajo-final-frontend-romero.*\.vercel\.app$/
+
 app.use(cors({
-    origin: [
-        'http://localhost:5173',  
-        'http://trabajo-final-frontend-romero.vercel.app'
-    ],
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true)
+        if (allowedOrigins.includes(origin) || vercelPreviewRegex.test(origin)) {
+            return callback(null, true)
+        }
+        return callback(new Error('Not allowed by CORS'))
+    },
     credentials: true
 }))
 
