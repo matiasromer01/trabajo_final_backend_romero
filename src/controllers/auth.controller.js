@@ -86,7 +86,8 @@ class AuthController {
                 )
                 return response.status(500).json({
                     ok: false,
-                    message: 'Error interno del servidor'
+                    message: 'Error interno del servidor',
+                    error: typeof error?.message === 'string' ? error.message : 'Sin detalle'
                 })
             }
         }
