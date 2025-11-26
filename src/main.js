@@ -1,15 +1,12 @@
 import ENVIRONMENT from "./config/environment.config.js";
 
-import connectToMongoDB from "./config/configMongoDB.config.js";
 import express from 'express'
 import authRouter from "./routes/auth.router.js";
 import reservationRouter from "./routes/reservation.router.js";
 import canchaRouter from "./routes/cancha.router.js";
 import conversacionRouter from "./routes/conversacion.router.js";
 import cors from 'cors'
-
-
-connectToMongoDB()
+import { ensureDbConnection } from "./middlewares/db.middleware.js";
 
 const app = express()
 
@@ -33,6 +30,9 @@ app.use(cors({
 
 
 app.use(express.json())
+
+// Ensure DB connection before processing any request
+app.use(ensureDbConnection)
 
 app.use('/api/auth', authRouter)
 app.use('/api/reservas', reservationRouter)
