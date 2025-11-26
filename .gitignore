@@ -1,0 +1,5 @@
+.env
+node_modules
+README.md   
+DEPLOY_QUICK.md
+DEPLOYMENT.md
